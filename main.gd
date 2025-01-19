@@ -77,6 +77,3 @@ func set_car_properties(car, spawn_point):
 			car.road_type = "horizontal"
 
 	car.speed = 220
-	
-func _on_screen_exited():
-	queue_free()

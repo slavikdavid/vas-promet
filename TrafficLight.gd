@@ -1,34 +1,27 @@
 extends Node2D
 
-# Define light states.
 enum LightState { GREEN, YELLOW, RED, RED_YELLOW }
 
-# Durations for the vertical road.
 @export var vertical_green_duration: float = 24.0
 @export var vertical_yellow_duration: float = 4.0
 @export var vertical_red_duration: float = 37.0
 
-# Durations for the horizontal road.
 @export var horizontal_red_duration: float = 30.0
 @export var horizontal_red_yellow_duration: float = 3.0
 @export var horizontal_green_duration: float = 27.0
 @export var horizontal_yellow_duration: float = 3.0
 
-# The road type this traffic light controls: "vertical" or "horizontal".
 @export var road_type: String = "vertical"
 
-# Initial states for the vertical road (master control).
 var vertical_state: int = LightState.GREEN
 var horizontal_state: int = LightState.RED
 
 var timer: Timer
 
-# Get references to the ColorRect nodes.
 @onready var red_rect: ColorRect = $RedRect
 @onready var yellow_rect: ColorRect = $YellowRect
 @onready var green_rect: ColorRect = $GreenRect
 
-# Signals for state changes.
 signal vertical_light_changed(state)
 signal horizontal_light_changed(state)
 
@@ -38,17 +31,15 @@ func _ready():
 	add_child(timer)
 	timer.connect("timeout", Callable(self, "_on_timer_timeout"))
 	_enter_vertical_state(LightState.GREEN)
-	_update_display()  # Initial visual update
+	_update_display()
 
 func _enter_vertical_state(new_state: int) -> void:
 	vertical_state = new_state
 	emit_signal("vertical_light_changed", vertical_state)
 
-	# Calculate horizontal state based on vertical state.
 	horizontal_state = _get_horizontal_state_from_vertical()
 	emit_signal("horizontal_light_changed", horizontal_state)
 
-	# Set the timer based on the vertical road's state.
 	match vertical_state:
 		LightState.GREEN:
 			timer.wait_time = vertical_green_duration
@@ -70,14 +61,12 @@ func _on_timer_timeout() -> void:
 			_enter_vertical_state(LightState.GREEN)
 
 func _update_display():
-	# Hide all ColorRects.
 	red_rect.visible = false
 	yellow_rect.visible = false
 	green_rect.visible = false
 
 	var effective_state = vertical_state if road_type == "vertical" else horizontal_state
 
-	# Update the visual indicator based on the effective state.
 	match effective_state:
 		LightState.GREEN:
 			green_rect.visible = true
@@ -89,7 +78,6 @@ func _update_display():
 				yellow_rect.visible = true
 
 func _get_horizontal_state_from_vertical() -> int:
-	# Determine horizontal state based on vertical state.
 	match vertical_state:
 		LightState.GREEN:
 			return LightState.RED

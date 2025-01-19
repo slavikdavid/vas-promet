@@ -86,9 +86,8 @@ func _process(delta):
 				print("Car stopped at stop line due to no car ahead. Position: ", global_position)
 				current_state = CarState.STOPPED
 				current_speed = 0
-		return  # Ensure no further movement occurs after processing stop conditions
-
-	# Green light case
+		return
+		
 	if light_state == LightState.GREEN:
 		print("Car is moving. Position: ", global_position)
 		current_state = CarState.MOVING
@@ -178,3 +177,6 @@ func _on_intersection_exited(body: Node) -> void:
 		is_in_intersection = false
 		has_exited_intersection = true
 		print("Exited intersection")
+		
+func _on_screen_exited():
+	queue_free()
