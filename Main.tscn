@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://3cygvgb02dq8"]
+
+[ext_resource type="Texture2D" uid="uid://bdpp1on3jxvex" path="res://map.jpg" id="1_7wp3s"]
+[ext_resource type="Script" path="res://main.gd" id="1_lfw1b"]
+[ext_resource type="Script" path="res://camera_2d.gd" id="1_rpmk4"]
+[ext_resource type="PackedScene" uid="uid://dh1l1d77kjmtf" path="res://Car.tscn" id="2_kp11w"]
+[ext_resource type="PackedScene" uid="uid://c3hl6t1q3vbo" path="res://TrafficLight.tscn" id="5_dbghi"]
+[ext_resource type="Script" path="res://intersection_area.gd" id="6_7vi3d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vehol"]
+size = Vector2(14.35, 13.6308)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_lfw1b")
+car_scene = ExtResource("2_kp11w")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(1302, 1302)
+zoom = Vector2(0.3, 0.3)
+script = ExtResource("1_rpmk4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_7wp3s")
+offset = Vector2(1302, 1302)
+
+[node name="Spawn_East_Right_Lane_1" type="Marker2D" parent="."]
+position = Vector2(3505, 1225)
+
+[node name="Spawn_East_Right_Lane_2" type="Marker2D" parent="."]
+position = Vector2(3505, 1100)
+
+[node name="Spawn_West_Right_Lane_1" type="Marker2D" parent="."]
+visible = false
+position = Vector2(-800, 1375)
+
+[node name="Spawn_West_Right_Lane_2" type="Marker2D" parent="."]
+position = Vector2(-800, 1505)
+
+[node name="Spawn_Top_Right_Lane_1" type="Marker2D" parent="."]
+position = Vector2(1235, -900)
+
+[node name="Spawn_Top_Right_Lane_2" type="Marker2D" parent="."]
+position = Vector2(1095, -900)
+
+[node name="Spawn_Bottom_Right_Lane_1" type="Marker2D" parent="."]
+position = Vector2(1375, 3505)
+
+[node name="Spawn_Bottom_Right_Lane_2" type="Marker2D" parent="."]
+position = Vector2(1500, 3505)
+
+[node name="TrafficLight" parent="." instance=ExtResource("5_dbghi")]
+position = Vector2(1622, 1090)
+road_type = "horizontal"
+
+[node name="TrafficLight2" parent="." instance=ExtResource("5_dbghi")]
+position = Vector2(1418, 1564)
+
+[node name="TurnStartMarker" type="Marker2D" parent="."]
+position = Vector2(1375, 1500)
+
+[node name="TurnEndMarker" type="Marker2D" parent="."]
+position = Vector2(700, 1225)
+
+[node name="IntersectionArea" type="Area2D" parent="."]
+script = ExtResource("6_7vi3d")
+
+[node name="IntersectionArea" type="CollisionShape2D" parent="IntersectionArea"]
+position = Vector2(1283.5, 1301)
+scale = Vector2(60, 65)
+shape = SubResource("RectangleShape2D_vehol")
+one_way_collision_margin = 0.0

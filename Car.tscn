@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://dh1l1d77kjmtf"]
+
+[ext_resource type="Script" path="res://car.gd" id="1_2vpep"]
+[ext_resource type="Script" path="res://sprite_2d.gd" id="2_winat"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8hoef"]
+load_path = "res://.godot/imported/Audi.png-f1e48151f6df80e2be380c38ceee1a35.ctex"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_id440"]
+radius = 53.07
+height = 230.0
+
+[node name="Car" type="CharacterBody2D" groups=["cars"]]
+z_index = 5
+script = ExtResource("1_2vpep")
+speed = 5.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 5
+texture = SubResource("CompressedTexture2D_8hoef")
+script = ExtResource("2_winat")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_id440")

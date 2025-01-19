@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dh1l1d77kjmtf"]
+
+[ext_resource type="Script" path="res://car.gd" id="1_2vpep"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8hoef"]
+load_path = "res://.godot/imported/Audi.png-f1e48151f6df80e2be380c38ceee1a35.ctex"
+
+[node name="CharacterBody2D" type="Node2D"]
+z_index = 5
+script = ExtResource("1_2vpep")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 5
+texture = SubResource("CompressedTexture2D_8hoef")
+
+[node name="Camera2D" type="Camera2D" parent="."]
